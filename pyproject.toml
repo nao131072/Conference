@@ -1,0 +1,19 @@
+[project]
+name = "conference"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "nao131072",email = "luchiya131072@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-apps-meet (>=0.1.13,<0.2.0)",
+    "google-auth-httplib2 (>=0.2.0,<0.3.0)",
+    "google-auth-oauthlib (>=1.2.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
