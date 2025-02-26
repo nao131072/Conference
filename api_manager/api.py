@@ -16,12 +16,14 @@ class Api():
         pass
 
     @classmethod
-    def user_access_app(cls, user_token = None) -> str:
+    def user_access_app(cls, user_token: str|dict = None) -> str:
         """
         Try to access app through the Google Meet API
         """
         user_creds = None
-        
+        if isinstance(user_token, str):
+            user_token = json.loads(user_token)
+
         # Read user token
         if user_token is not None:
             user_creds = Credentials.from_authorized_user_info(user_token, Api.SCOPES)
@@ -38,9 +40,10 @@ class Api():
                 user_creds = flow.run_local_server(port=0)
             
             new_token = user_creds.to_json()
+            
             return new_token
         
-        return None
+        return user_creds.to_json()
 
     @classmethod
     def create_meeting(cls, user_token: str|dict):
@@ -64,6 +67,10 @@ class Api():
 if __name__ == '__main__':
     import json
 
-    new_token:str = Api.user_access_app()
+    user_id = 1
+    user_token = EnvManager.find_user_token(user_id)
+
+    new_token = Api.user_access_app(user_token)
+    EnvManager.save_user_token(user_id, new_token)
     Api.create_meeting(new_token)
     
